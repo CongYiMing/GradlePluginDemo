@@ -1,0 +1,26 @@
+apply plugin: 'groovy'//引入groovy插件
+apply plugin: 'maven'//引入maven插件
+
+dependencies {
+    implementation gradleApi()//引入gradleApi依赖库
+    implementation localGroovy()//引入localGroovy依赖库
+}
+uploadArchives {//传到maven仓库
+    repositories {//maven仓库配置
+        mavenDeployer {//用于发布本地maven
+            //groupId，artifactId，version构成maven仓库构件的唯一坐标
+            pom.groupId = "com.yim.plugindemo"//一般是组织标示
+            pom.artifactId = "mainplugin"//一般是项目标示
+            pom.version = "1.0"//版本号
+            repository(url: uri('../repo'))//maven仓库的位置，这里是上传到本地repo文件下
+        }
+    }
+}
+task sourcesJar(type: Jar) {
+    from project.sourceSets.main.groovy.srcDirs
+    classifier = 'sources'
+}
+task javadocJar(type: Jar, dependsOn: groovydoc) {
+    classifier = 'javadoc'
+    from groovydoc.destinationDir
+}

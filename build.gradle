@@ -4,11 +4,13 @@ buildscript {
     repositories {
         google()
         jcenter()
-        
+        maven{//设置本地maven仓库路径
+            url uri('./repo')
+        }
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.5.2'
-        
+        classpath 'com.yim.plugindemo:mainplugin:1.0'//引入插件仓库
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
